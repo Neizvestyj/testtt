@@ -1,0 +1,183 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1a1a1a;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
+
+.accordion {
+  width: 380px;
+  cursor: pointer;
+  perspective: 1000px;
+}
+
+.head {
+  background: #2d2d2d;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  z-index: 10;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: background 0.3s;
+}
+
+.head:hover {
+  background: #3d3d3d;
+}
+
+.icon {
+  font-size: 20px;
+  transition: transform 0.4s;
+}
+
+.body {
+  background: #6c5ce7;
+  padding: 20px;
+  margin-top: 0;
+  border-radius: 0 0 12px 12px;
+  transform-origin: top center;
+  transform: rotateX(-90deg);
+  opacity: 0;
+  visibility: hidden;
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s, margin-top 0.4s;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.body p {
+  margin: 0;
+  line-height: 1.5;
+  opacity: 0.9;
+}
+
+.accordion.open .body {
+
+  transform: rotateX(0deg);
+  opacity: 1;
+  visibility: visible;
+  margin-top: 10px;
+}
+
+.accordion.open .icon {
+  transform: rotate(45deg);
+}
+
+.accordion.open .head {
+  border-radius: 12px 12px 0 0;
+}
+
+
+
+.section {
+  display: flex;
+width:100%;
+}
+
+.selectName {
+  display: flex;
+  flex-direction: column;
+}
+.list{
+list-style:none;
+padding-left:0;
+margin:0;
+
+}
+
+.list li{
+list-style:none;
+}
+.list li{
+padding-left:0;
+list-style:none;
+}
+li::marker{display:none;}
+
+summary::marker{dispaly:none;}
+summary::-webkit-details-marker{
+display:none;
+}
+
+
+.logs-grid {
+  width: 100%;
+padding-left:0;
+}
+
+.grid-header,
+.grid-row {
+  display: grid;
+  grid-template-columns: 40px 1fr 1fr;/ номер | вес | повторы / 
+gap: 8px;
+  align-items: center;
+  padding: 6px 0;
+}
+
+.grid-header {
+  font-weight: 700;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 6px;
+}
+
+.grid-row {
+  border-bottom: 1px dashed #eee;
+
+
+}
+.grid-header >div,
+.grid-row>div{
+white-space:nowrap;
+overflow:hidden;
+text-overflow:elipsis;
+padding:2px 0;
+}
+
+.static {
+  position: absolute;
+  z-index: 10000000;
+}
+
+
+
+
+@media (max-width: 520px) {
+
+  .grid-header,
+  .grid-row {
+display:grid;
+    grid-template-columns: 36px 1fr 1fr;
+gap:6px;
+  }
+
+  .grid-header div:nth-child(2),
+  .grid-header div:nth-child(3) {
+    display: block;
+  }
+
+  .grid-row>div {
+    padding: 4px 0;
+
+  }
+
+
+}
+:root{
+box-sizing:border-box;
+}
+
+.list-wrapper {
+  max-height: calc(100vh - 120px); 
+/ подгоните /
+  overflow-y: auto;
+  display: flex;
+  justify-content: center; 
+/ если нужно /
+}
