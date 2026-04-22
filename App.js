@@ -2,22 +2,22 @@ Vue.component('draggable', window.vuedraggable);
 const App = {
   data() {
     return {
-      openAccardion:false,
-      openDetails:null,
-      flagBtn:false,
-      nameExer:"",
-flagAccardion:false,
-status:false,
+      openAccardion: false,
+      openDetails: null,
+      flagBtn: false,
+      nameExer: "",
+      flagAccardion: false,
+      status: false,
       items: [
         {
-   id: 1,
-   name: "Тяга блока в горизонтале",
-   exercise: [
+          id: 1,
+          name: "Тяга блока в горизонтале",
+          exercise: [
             {
               date: new Date().toLocaleDateString(),
               logs: [],
-              sumReps:0,
-              sumWeight:0,
+              sumReps: 0,
+              sumWeight: 0,
             }
           ]
 
@@ -30,8 +30,8 @@ status:false,
             {
               date: new Date().toLocaleDateString(),
               logs: [],
-              sumReps:0,
-              sumWeight:0,
+              sumReps: 0,
+              sumWeight: 0,
             }
           ]
         },
@@ -42,132 +42,132 @@ status:false,
             {
               date: new Date().toLocaleDateString(),
               logs: [],
-              sumReps:0,
-              sumWeight:0
+              sumReps: 0,
+              sumWeight: 0
             }
           ]
         },
       ]
     }
   },
-mounted(){
-this.loadingExercise()
+  mounted() {
+    this.loadingExercise()
 
-},
+  },
   methods: {
-toggleAccardion(id) {
-this.openAccardion = this.openAccardion === id ? null : id;
-},
+    toggleAccardion(id) {
+      this.openAccardion = this.openAccardion === id ? null : id;
+    },
 
-fixLog(item,exIndex) {
+    fixLog(item, exIndex) {
       //item.logs.unshift({ weight: item.weight, reps: item.reps })
       // если нет тренировок, создаём новую
       if (!Array.isArray(item.exercise) || item.exercise.length === 0) {
-item.exercise = [{ date: new Date().toISOString().slice(0, 10), logs: [] }];
+        item.exercise = [{ date: new Date().toISOString().slice(0, 10), logs: [] }];
       }
-const session = item.exercise[item.exercise.length - 1];
+      const session = item.exercise[item.exercise.length - 1];
       const w = item.weight != null ? item.weight : 0;
       const r = item.reps != null ? item.reps : 0;
       // добавляем в начало списка логов (новые сверху)
-session.logs.push({ weight: w, reps: r });
-session.sumReps+=r;
-session.sumWeight+=w;
+      session.logs.push({ weight: w, reps: r });
+      session.sumReps += r;
+      session.sumWeight += w;
 
-//this.openDetails=this.openDetails===null?null:0;
-//item.exercise[0]
-//exer[exer.length-1]
-//exer.exindex;
+      //this.openDetails=this.openDetails===null?null:0;
+      //item.exercise[0]
+      //exer[exer.length-1]
+      //exer.exindex;
 
-this.saveExercise(item)
+      this.saveExercise(item)
     },
 
-addExercise(item) {
+    addExercise(item) {
       // const newId = this.items.exercise.length ? Math.max(...this.items.map(i => i.id)) + 1 : 1;
       if (!Array.isArray(item.exercise)) item.exercise = [];
-item.exercise.push({
+      item.exercise.push({
         //ide: newId,
         date: new Date().toLocaleDateString(),
         logs: [],
-        sumReps:0,
-        sumWeight:0
+        sumReps: 0,
+        sumWeight: 0
       });
       // можно сразу открыть аккордеон, если нужно
-this.openAccardion = item.id;
-this.saveExercise(item);
-this.openDetails=0;
-this.flagBtn=true;
+      this.openAccardion = item.id;
+      this.saveExercise(item);
+      this.openDetails = 0;
+      this.flagBtn = true;
     },
 
-saveExercise(item){
-try{
-localStorage.setItem("workoutItems",JSON.stringify(this.items));
-} catch(e){
-alert("Ошибка при сохранении");
-consile.log("Ошибка при созранении",e);
-}
-},
+    saveExercise(item) {
+      try {
+        localStorage.setItem("workoutItems", JSON.stringify(this.items));
+      } catch (e) {
+        alert("Ошибка при сохранении");
+        consile.log("Ошибка при созранении", e);
+      }
+    },
 
-loadingExercise(item){
-try{
-const savedExer=localStorage.getItem("workoutItems");
-if(savedExer){
+    loadingExercise(item) {
+      try {
+        const savedExer = localStorage.getItem("workoutItems");
+        if (savedExer) {
 
-this.status=true;
+          this.status = true;
 
-const parsed=JSON.parse(savedExer);
-if(Array.isArray(parsed)){
-this.items=parsed;
-}
-}
-}catch(e){
+          const parsed = JSON.parse(savedExer);
+          if (Array.isArray(parsed)) {
+            this.items = parsed;
+          }
+        }
+      } catch (e) {
 
-this.status=false
+        this.status = false
 
-alert("Ошибка при сохранении");
-consile.log("Ошибка при созранении",e);
-}
+        alert("Ошибка при сохранении");
+        consile.log("Ошибка при созранении", e);
+      }
+    },
+    del() {
+      localStorage.clear()
+    },
+
+    //toggleDetails(exIndex){
+    //this.openDetails=this.openDetails===exIndex?null:exIndex
+    //},
+
+
+    addNewExercise() {
+      if (this.nameExer !== "") {
+        const newId = this.items.length ? Math.max(...this.items.map(i => i.id)) + 1 : 1;
+
+        this.items.push(
+          {
+            id: newId,
+            name: this.nameExer,
+            exercise: [
+              {
+                date: new Date().toLocaleDateString(),
+                logs: [],
+                sumReps: 0,
+                sumWeight: 0
+              }]
+          });
+
+        this.nameExer = "";
+        this.saveExercise();
+        this.flagAccardion = false;
+      }
+    }
   },
-del(){
-localStorage.clear()
-},
+  watch: {
+    items: {
+      handler(item) {
+        this.saveExercise(item);
+      },
+      deep: true
+    }
 
-//toggleDetails(exIndex){
-//this.openDetails=this.openDetails===exIndex?null:exIndex
-//},
-
-
-addNewExercise(){
-if(this.nameExer!==""){
-const newId = this.items.length ? Math.max(...this.items.map(i =>i.id)) + 1 : 1;
-
-this.items.push(
-{
- id: newId,
-   name:this.nameExer,
-   exercise: [
-            {
-              date: new Date().toLocaleDateString(),
-              logs: [],
-              sumReps:0,
-              sumWeight:0
-             }]
-            });
-
-this.nameExer="";
-this.saveExercise();
-this.flagAccardion=false;
-}
-}
-},
-watch:{
-items:{
-handler(item){
-this.saveExercise(item);
-},
-deep:true
-}
-
-},
+  },
   template: `<div>
 <button @click="del">del</button>
 
@@ -203,7 +203,7 @@ animation="150" :ghost-class="'ghost'" tag="ul" class="list">
      <div class="selectName box">
 <span>ПОВТОРЕНИЯ</span>
 <select v-model.number="item.reps">
-<option  v-for="n in 49" :key="n" :value="n">{{ n }}</option>
+<option  v-for="n in 100" :key="n" :value="n">{{ n }}</option>
 </select>
      </div>
 
