@@ -127,8 +127,10 @@ const App = {
         consile.log("Ошибка при созранении", e);
       }
     },
-    del() {
-      localStorage.clear()
+    del(id) {
+      // localStorage.clear()
+      this.items = this.items.filter(item => item.id !== id)
+      this.saveExercise();
     },
 
     //toggleDetails(exIndex){
@@ -185,6 +187,7 @@ animation="150" :ghost-class="'ghost'" tag="ul" class="list">
 <div v-for="item in items" :key="item.id"> 
 <div :class="['accordion', { open: openAccardion === item.id }]" >
     <div @click="toggleAccardion(item.id)" class="head">
+    <button @click="del(item.id)">del</button>
       <span>{{item.name}}</span>
 <span class="icon drag-handle">☰</span>
     </div>
