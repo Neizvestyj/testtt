@@ -8,12 +8,65 @@ body {
   font-family: 'Segoe UI', sans-serif;
   color: white;
 }
-.status{
-position:absolute;
-right:0;
-padding:10px;
-margin:10px;
+
+.removeButten {
+  margin-top: 60%;
 }
+
+.session-header {}
+
+/* Стили для контейнера */
+.session-header {
+  display: table;
+  width: 100%;
+}
+
+/* Стили для кнопки */
+.removeButten {
+  /* Отображаем как ячейку таблицы */
+  display: table-cell;
+  vertical-align: middle;
+  /* Выравниваем по центру по вертикали */
+  padding-right: 5px;
+  /* Небольшой отступ от следующего элемента */
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  font-size: 1.2em;
+}
+
+/* Стили для тега details */
+.first-details {
+  /* Отображаем как ячейку таблицы */
+  display: table-cell;
+  vertical-align: middle;
+  /* Важно! Выравниваем по центру по вертикали */
+  width: calc(100% - 30px);
+  /* Занимаем оставшееся место */
+}
+
+/* Убираем дефолтный маркер списка */
+.exercise ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+
+
+
+
+
+
+
+
+
+.status {
+  position: absolute;
+  right: 0;
+  padding: 10px;
+  margin: 10px;
+}
+
 .accordion {
   width: 380px;
   cursor: pointer;
@@ -79,59 +132,79 @@ margin:10px;
   border-radius: 12px 12px 0 0;
 }
 
+.added {
+  margin-top: 20%;
+}
 
 
 .section {
   display: flex;
-width:100%;
+  width: 100%;
 }
 
 .selectName {
   display: flex;
   flex-direction: column;
 }
-.list{
-list-style:none;
-padding-left:0;
-margin:0;
+
+.list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
 
 }
 
-.list li{
-list-style:none;
-}
-.list li{
-padding-left:0;
-list-style:none;
-}
-li::marker{display:none;}
-
-summary::marker{dispaly:none;}
-summary::-webkit-details-marker{
-display:none;
+.list li {
+  list-style: none;
 }
 
+.list li {
+  padding-left: 0;
+  list-style: none;
+}
+
+li::marker {
+  display: none;
+}
+
+summary::marker {
+  display: none;
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+/* 1. Убираем стандартный маркер */
+details summary {
+  list-style: none;
+  /* Полностью убирает маркер */
+  margin: 0;
+  /* Сбрасываем отступы, чтобы не ломать верстку */
+  padding: 0;
+  /* Сбрасываем внутренние отступы */
+  padding-left: 0;
+}
 
 .logs-grid {
   width: 100%;
-padding-left:0;
+  padding-left: 0;
 }
 
 .grid-header,
 .grid-row {
   display: grid;
-  grid-template-columns: 40px 1fr 1fr;/ номер | вес | повторы / 
-gap: 8px;
+  grid-template-columns: 40px 1fr 1fr;/ номер | вес | повторы / gap: 8px;
   align-items: center;
   padding: 6px 0;
-font-size:30px;
+  font-size: 30px;
 }
 
 .grid-header {
   font-weight: 700;
   border-bottom: 1px solid #ddd;
   margin-bottom: 6px;
-font-size:30px;
+  font-size: 30px;
 }
 
 .grid-row {
@@ -139,12 +212,13 @@ font-size:30px;
 
 
 }
-.grid-header >div,
-.grid-row>div{
-white-space:nowrap;
-overflow:hidden;
-text-overflow:elipsis;
-padding:2px 0;
+
+.grid-header>div,
+.grid-row>div {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: elipsis;
+  padding: 2px 0;
 }
 
 .static {
@@ -157,11 +231,16 @@ padding:2px 0;
 
 @media (max-width: 520px) {
 
+  .exercise {
+    width: 100;
+  }
+
+  ,
   .grid-header,
   .grid-row {
-display:grid;
+    display: grid;
     grid-template-columns: 36px 1fr 1fr;
-gap:6px;
+    gap: 6px;
   }
 
   .grid-header div:nth-child(2),
@@ -174,63 +253,74 @@ gap:6px;
 
   }
 
-.btn{
-background-color: #0563af;
-color: white;
-  padding: 12px;
-  width: 50px;
-  border: none;
-  font-size: 20px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-  -webkit-appearance: button;
-  appearance: button;
-  outline: none;
-border-radius:20px;
-}
-.btn::before {
-  content: "\f13a";
-  font-family: FontAwesome;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 20%;
-  height: 100%;
-  text-align: center;
-  font-size: 28px;
-  line-height: 45px;
-  color: rgba(255, 255, 255, 0.5);
-  //background-color: rgba(255, 255, 255, 0.1);
-  pointer-events: none;
+  .btn {
+    text-align: center;
+    flex-grow: 1;
+    background-color: #0563af;
+    color: white;
+    padding: 28px;
+    // width: 50px;
+    border: none;
+    font-size: 20px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+    border-radius: 10px;
+  }
+
+  .btn::before {
+    content: "\f13a";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20%;
+    height: 100%;
+    text-align: center;
+    font-size: 28px;
+    line-height: 45px;
+    color: rgba(255, 255, 255, 0.5);
+    //background-color: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+
+  }
+
 
 }
 
-
-}
-:root{
-box-sizing:border-box;
+:root {
+  box-sizing: border-box;
 }
 
 .list-wrapper {
-margin-top:30px;
-  width: 380px; 
-/ как у .accordion /
-  max-height: calc(100vh - 80px);
- 
+  margin-top: 30px;
+  width: 380px;
+  / как у .accordion / max-height: calc(100vh - 80px);
+
   overflow-y: auto;
-  -webkit-overflow-scrolling: touch; 
-/ плавный скролл на iOS /
+  -webkit-overflow-scrolling: touch;
+  / плавный скролл на iOS /
 }
-.list-wrapper::-webkit-scrollbar { width: 8px; }
-.list-wrapper::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 4px; }
+
+.list-wrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.list-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+}
+
 //*.list-wrapper {
-  max-height: calc(100vh - 520px); 
-/ подгоните /
-  overflow-y: auto;
-  display: flex;
-  justify-content: center; 
+max-height: calc(100vh - 520px);
+/ подгоните / overflow-y: auto;
+display: flex;
+justify-content: center;
 
 }
-*//
+
+* //
 
 
 /*body {
@@ -257,7 +347,7 @@ margin-top:30px;
   -webkit-appearance: button;
   appearance: button;
   outline: none;
-margin-right:5px;
+  margin-right: 5px;
 }
 
 .box::before {
@@ -285,19 +375,33 @@ margin-right:5px;
   padding: 30px;
 }
 
-.btn{
-background-color: #0563af;
-color: white;
-  padding: 8px;
-  width: 70px;
+.btn {
+  text-align: center;
+  flex-grow: 1;
+  background-color: #0563af;
+  color: white;
+  padding: 12px;
+  //width: 41px;
   border: none;
-  font-size: 20px;
+  font-size: 19px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
   -webkit-appearance: button;
   appearance: button;
   outline: none;
-margin:6px;
+  //margin:6px;
+
+  white-space: nowrap;
+  /* Надпись на кнопке не будет переноситься на новую строку */
+  flex-shrink: 1;
+  /* РАЗРЕШАЕМ кнопке сжиматься, если места мало */
+  min-width: 80px;
+  /* Задаем минимальную ширину, чтобы кнопка не исчезла совсем */
+  max-width: 150px;
+  /* Задаем предел, чтобы кнопка не была слишком длинной */
+  box-sizing: border-box;
+  /* Чтобы padding и border входили в ширину */
 }
+
 .btn::before {
   content: "\f13a";
   font-family: FontAwesome;
@@ -315,62 +419,152 @@ margin:6px;
 
 }
 
-.btnGrop{
-display:flex;
-padding-top:5%;
+.btnGrop {
+  display: flex;
+  //padding-top:5%;
+  margin-top: 6%;
+
+  gap: 8px;
+  justify-content: flex-end;
 
 }
-.btnRigt{
-margin-right:5px;
+
+.btnRigt {
+  //margin-right:5px;
+  //s min-width: 60px;
+  flex-shrink: 2;
 }
 
-.dateOfexer{
-font-size:30px;
+.dateOfexer {
+  font-size: 30px;
 }
 
 
 
 .loader {
-width: 50px;
-height: 50px;
-border: 5px solid rgba(0, 0, 0, 0.1);
-border-radius: 50%;
-border-top-color: #3498db;
-animation: spin 1s ease-in-out infinite;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top-color: #3498db;
+  animation: spin 1s ease-in-out infinite;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @keyframes spin {
-to {
-transform: translate(-50%, -50%) rotate(360deg);
-}
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 .preloader {
-position: fixed;
-top: 0;
-left: 0;
-width: 100%;
-height: 100%;
-background-color: white;
-z-index: 9999;
-transition: opacity 0.5s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  z-index: 9999;
+  transition: opacity 0.5s;
 }
 
 .content {
-opacity: 0;
-transition: opacity 0.5s;
+  opacity: 0;
+  transition: opacity 0.5s;
 }
 
 .loaded .preloader {
-opacity: 0;
-visibility: hidden;
+  opacity: 0;
+  visibility: hidden;
 }
 
 .loaded .content {
-opacity: 1;
+  opacity: 1;
 }
 
+
+
+
+
+.button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(20, 20, 20);
+  border: none;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.164);
+  cursor: pointer;
+  transition-duration: 0.3s;
+  overflow: hidden;
+  position: relative;
+  gap: 2px;
+}
+
+.svgIcon {
+  width: 12px;
+  transition-duration: 0.3s;
+}
+
+.svgIcon path {
+  fill: white;
+}
+
+.button:hover {
+  transition-duration: 0.3s;
+  background-color: rgb(255, 69, 69);
+  align-items: center;
+  gap: 0;
+}
+
+.bin-top {
+  transform-origin: bottom right;
+}
+
+.button:hover .bin-top {
+  transition-duration: 0.5s;
+  transform: rotate(160deg);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+
+.fade-enter,
+.fade-leave-to
+
+/* .fade-leave-active в <2.1.8 */
+  {
+  opacity: 0;
+}
+
+
+
+.reversed-list {
+  display: flex;
+  flex-direction: column;
+  /* Для вертикального списка */
+}
+
+.reversed-list li {
+  order: 1;
+  /* Инвертируем порядок */
+}
+
+button {
+  all: unset;
+}
+
+/* Если список горизонтальный, используйте row-reverse */
+/* .reversed-list {
+  display: flex;
+  flex-direction: row-reverse;
+} */

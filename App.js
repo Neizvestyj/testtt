@@ -14,7 +14,7 @@ const App = {
           name: "Тяга блока в горизонтале",
           exercise: [
             {
-              date: new Date().toLocaleDateString(),
+date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' }),
               logs: [],
               sumReps: 0,
               sumWeight: 0,
@@ -65,13 +65,13 @@ const App = {
       if (!Array.isArray(item.exercise) || item.exercise.length === 0) {
         item.exercise = [{ date: new Date().toISOString().slice(0, 10), logs: [] }];
       }
-      const session = item.exercise[item.exercise.length - 1];
+      const session = item.exercise[item.exercise.length-1];
       const w = item.weight != null ? item.weight : 0;
       const r = item.reps != null ? item.reps : 0;
       // добавляем в начало списка логов (новые сверху)
       session.logs.push({ weight: w, reps: r });
       session.sumReps += r;
-      session.sumWeight += w;
+      session.sumWeight += w*r;
 
       //this.openDetails=this.openDetails===null?null:0;
       //item.exercise[0]
@@ -86,7 +86,8 @@ const App = {
       if (!Array.isArray(item.exercise)) item.exercise = [];
       item.exercise.push({
         //ide: newId,
-        date: new Date().toLocaleDateString(),
+        //date: new Date().toLocaleDateString(),
+date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit',year:'2-digit' }),
         logs: [],
         sumReps: 0,
         sumWeight: 0
@@ -127,11 +128,30 @@ const App = {
         consile.log("Ошибка при созранении", e);
       }
     },
-    del(id) {
+    /*del(id) {
       // localStorage.clear()
-      this.items = this.items.filter(item => item.id !== id)
+this.items = this.items.filter(item => item.id !== id)
       this.saveExercise();
-    },
+    },*/
+async del(id) {
+  // Задержка 1000 мс (1 секунда)
+  await new Promise(resolve => setTimeout(resolve, 1000));
+
+  // Удаляем элемент
+  this.items = this.items.filter(item => item.id !== id);
+
+  // Сохраняем изменения
+  this.saveExercise();
+},
+removeSession(item,sessionIndex){
+
+const exerciseLength=item.exercise.length;
+const realIndex=exerciseLength-1-sessionIndex;
+item.exercise.splice(realIndex,1)
+
+  // Сохраняем изменения
+  this.saveExercise();
+},
 
     //toggleDetails(exIndex){
     //this.openDetails=this.openDetails===exIndex?null:exIndex
@@ -148,7 +168,7 @@ const App = {
             name: this.nameExer,
             exercise: [
               {
-                date: new Date().toLocaleDateString(),
+                date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit',year:'2-digit' }),
                 logs: [],
                 sumReps: 0,
                 sumWeight: 0
@@ -171,11 +191,8 @@ const App = {
 
   },
   template: `<div>
-<button @click="del">del</button>
-
-
-
-<span class="status" v-if="status">&#128994;</span>
+<span class="status" v-if="status">&#128994;
+</span>
 <span class="status" v-else="status">&#128308;</span>
 
 <div class="list-wrapper">
@@ -187,9 +204,56 @@ animation="150" :ghost-class="'ghost'" tag="ul" class="list">
 <div v-for="item in items" :key="item.id"> 
 <div :class="['accordion', { open: openAccardion === item.id }]" >
     <div @click="toggleAccardion(item.id)" class="head">
-    <button @click="del(item.id)">del</button>
+
+
+
+
+    <button class="button" @click="del(item.id)">
+<svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 69 14"
+    class="svgIcon bin-top"
+  >
+    <g clip-path="url(#clip0_35_24)">
+      <path
+        fill="black"
+        d="M20.8232 2.62734L19.9948 4.21304C19.8224 4.54309 19.4808 4.75 19.1085 4.75H4.92857C2.20246 4.75 0 6.87266 0 9.5C0 12.1273 2.20246 14.25 4.92857 14.25H64.0714C66.7975 14.25 69 12.1273 69 9.5C69 6.87266 66.7975 4.75 64.0714 4.75H49.8915C49.5192 4.75 49.1776 4.54309 49.0052 4.21305L48.1768 2.62734C47.3451 1.00938 45.6355 0 43.7719 0H25.2281C23.3645 0 21.6549 1.00938 20.8232 2.62734ZM64.0023 20.0648C64.0397 19.4882 63.5822 19 63.0044 19H5.99556C5.4178 19 4.96025 19.4882 4.99766 20.0648L8.19375 69.3203C8.44018 73.0758 11.6746 76 15.5712 76H53.4288C57.3254 76 60.5598 73.0758 60.8062 69.3203L64.0023 20.0648Z"
+      ></path>
+    </g>
+    <defs>
+      <clipPath id="clip0_35_24">
+        <rect fill="white" height="14" width="69"></rect>
+      </clipPath>
+    </defs>
+  </svg>
+
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 69 57"
+    class="svgIcon bin-bottom"
+  >
+    <g clip-path="url(#clip0_35_22)">
+      <path
+        fill="black"
+        d="M20.8232 -16.3727L19.9948 -14.787C19.8224 -14.4569 19.4808 -14.25 19.1085 -14.25H4.92857C2.20246 -14.25 0 -12.1273 0 -9.5C0 -6.8727 2.20246 -4.75 4.92857 -4.75H64.0714C66.7975 -4.75 69 -6.8727 69 -9.5C69 -12.1273 66.7975 -14.25 64.0714 -14.25H49.8915C49.5192 -14.25 49.1776 -14.4569 49.0052 -14.787L48.1768 -16.3727C47.3451 -17.9906 45.6355 -19 43.7719 -19H25.2281C23.3645 -19 21.6549 -17.9906 20.8232 -16.3727ZM64.0023 1.0648C64.0397 0.4882 63.5822 0 63.0044 0H5.99556C5.4178 0 4.96025 0.4882 4.99766 1.0648L8.19375 50.3203C8.44018 54.0758 11.6746 57 15.5712 57H53.4288C57.3254 57 60.5598 54.0758 60.8062 50.3203L64.0023 1.0648Z"
+      ></path>
+    </g>
+    <defs>
+      <clipPath id="clip0_35_22">
+        <rect fill="white" height="57" width="69"></rect>
+      </clipPath>
+    </defs>
+  </svg>
+
+</button>
       <span>{{item.name}}</span>
 <span class="icon drag-handle">☰</span>
+
+
+
+
     </div>
 
     <div v-if="openAccardion===item.id" class="body">
@@ -208,7 +272,7 @@ animation="150" :ghost-class="'ghost'" tag="ul" class="list">
 <select v-model.number="item.reps">
 <option  v-for="n in 100" :key="n" :value="n">{{ n }}</option>
 </select>
-     </div>
+   </div>
 
    <div class="btnGrop">
                    <div>
@@ -222,9 +286,12 @@ animation="150" :ghost-class="'ghost'" tag="ul" class="list">
          </div>
   
          <div class="exercise"> 
-         <ul>
+         <ul >
 <li  v-for="(exer,exIndex) in item.exercise.slice().reverse()" :key="exIndex"> 
-        
+
+<div class="session-header">
+<button class="removeButten" @click="removeSession(item,exIndex)">&#10008;</button>
+
 <details :open="openDetails===exIndex" 
 @click="toggleDetails(exIndex)"
 class="first-details">
@@ -236,6 +303,8 @@ class="first-details">
 {{Math.max(...exer.logs.map(log=>log.reps||0))}}</span>
 -->
 {{exer.sumWeight}}
+
+
 {{exer.sumReps}}
 
 </summary>
@@ -266,7 +335,9 @@ class="first-details">
         </div>
 
 
-      </details>
+</details>
+</div>
+
          </li>
          </ul>
          </div>
@@ -281,7 +352,7 @@ class="first-details">
 </draggable>
 </div>
 
-<div :class="['accordion', { open: flagAccardion}]">
+<div class="added" :class="['accordion', { open: flagAccardion}]">
     <div class="head"
 @click="flagAccardion=!flagAccardion"
 >
@@ -295,6 +366,6 @@ class="first-details">
 <button @click="addNewExercise()">Добавить упражнение</button>
     </div>
   </div>
+
 </div>`
 }
-
