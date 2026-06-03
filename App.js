@@ -2,6 +2,8 @@ Vue.component('draggable', window.vuedraggable);
 const App = {
   data() {
     return {
+      itemToDeleteId: null,
+      modal: false,
       openAccardion: false,
       openDetails: null,
       flagBtn: false,
@@ -14,7 +16,7 @@ const App = {
           name: "Тяга блока в горизонтале",
           exercise: [
             {
-date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' }),
+              date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' }),
               logs: [],
               sumReps: 0,
               sumWeight: 0,
@@ -65,13 +67,13 @@ date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' 
       if (!Array.isArray(item.exercise) || item.exercise.length === 0) {
         item.exercise = [{ date: new Date().toISOString().slice(0, 10), logs: [] }];
       }
-      const session = item.exercise[item.exercise.length-1];
+      const session = item.exercise[item.exercise.length - 1];
       const w = item.weight != null ? item.weight : 0;
       const r = item.reps != null ? item.reps : 0;
       // добавляем в начало списка логов (новые сверху)
       session.logs.push({ weight: w, reps: r });
       session.sumReps += r;
-      session.sumWeight += w*r;
+      session.sumWeight += w * r;
 
       //this.openDetails=this.openDetails===null?null:0;
       //item.exercise[0]
@@ -87,7 +89,7 @@ date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit' 
       item.exercise.push({
         //ide: newId,
         //date: new Date().toLocaleDateString(),
-date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit',year:'2-digit' }),
+        date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: '2-digit' }),
         logs: [],
         sumReps: 0,
         sumWeight: 0
@@ -128,30 +130,40 @@ date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit',
         consile.log("Ошибка при созранении", e);
       }
     },
-    /*del(id) {
-      // localStorage.clear()
-this.items = this.items.filter(item => item.id !== id)
+    del(id) {
+
+      this.itemToDeleteId = id;
+      this.modal = true;
+    },
+    confirmDel() {
+      // Задержка 1000 мс (1 секунда)
+      //await new Promise(resolve => setTimeout(resolve, 1000));
+      if (this.itemToDeleteId !== null) {
+        // Удаляем элемент
+        this.items = this.items.filter(item => item.id !== this.itemToDeleteId);
+        this.itemToDeleteId = null;
+        this.saveExercise();
+        this.modal = false;
+      }
+    },
+    /*async del(id) {
+      // Задержка 1000 мс (1 секунда)
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Удаляем элемент
+      this.items = this.items.filter(item => item.id !== id);
+      // Сохраняем изменения
       this.saveExercise();
     },*/
-async del(id) {
-  // Задержка 1000 мс (1 секунда)
-  await new Promise(resolve => setTimeout(resolve, 1000));
 
-  // Удаляем элемент
-  this.items = this.items.filter(item => item.id !== id);
+    removeSession(item, sessionIndex) {
 
-  // Сохраняем изменения
-  this.saveExercise();
-},
-removeSession(item,sessionIndex){
+      const exerciseLength = item.exercise.length;
+      const realIndex = exerciseLength - 1 - sessionIndex;
+      item.exercise.splice(realIndex, 1)
 
-const exerciseLength=item.exercise.length;
-const realIndex=exerciseLength-1-sessionIndex;
-item.exercise.splice(realIndex,1)
-
-  // Сохраняем изменения
-  this.saveExercise();
-},
+      // Сохраняем изменения
+      this.saveExercise();
+    },
 
     //toggleDetails(exIndex){
     //this.openDetails=this.openDetails===exIndex?null:exIndex
@@ -168,7 +180,7 @@ item.exercise.splice(realIndex,1)
             name: this.nameExer,
             exercise: [
               {
-                date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit',year:'2-digit' }),
+                date: new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: '2-digit' }),
                 logs: [],
                 sumReps: 0,
                 sumWeight: 0
@@ -191,6 +203,24 @@ item.exercise.splice(realIndex,1)
 
   },
   template: `<div>
+
+
+  <div>
+  <button @click="modal=true"
+  class="btn primary"></button>
+  
+  <teleport to="body">
+  <modal @close="modal=!modal"
+  @confirm="confirmDel"
+  v-if="modal">
+  </modal>
+  </teleport>
+  
+  
+  </div>
+
+
+
 <span class="status" v-if="status">&#128994;
 </span>
 <span class="status" v-else="status">&#128308;</span>
