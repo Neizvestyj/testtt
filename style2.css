@@ -1,3 +1,4 @@
+/* 1. Убираем глобальный цвет текста из body */
 body {
   margin: 0;
   height: 100vh;
@@ -6,8 +7,94 @@ body {
   align-items: flex-start;
   background-color: #1a1a1a;
   font-family: 'Segoe UI', sans-serif;
-  color: white;
+  /* color: white; <-- УДАЛЯЕМ ЭТУ СТРОКУ */
 }
+
+/* 2. Задаем цвет текста для элементов на темном фоне */
+.time-holder,
+.timer-container,
+.modal,
+.accordion .head {
+  color: white;
+  /* Текст на темном фоне (body, timer, modal) */
+}
+
+/* 3. Задаем цвет текста для элементов на светлом фоне */
+.modal-body p,
+.modal-footer,
+.btn-modal {
+  color: black;
+  /* Текст на светлом/белом фоне внутри модального окна */
+}
+
+/* Остальные стили остаются без изменений */
+
+/* ... ваш остальной CSS код ... */
+
+/* Пример для модального окна (убедитесь, что фон и цвет текста не конфликтуют) */
+.modal {
+  background-color: #ffffff;
+  /* Белый фон */
+  color: black;
+  /* Черный текст внутри белого фона */
+  /* ... другие стили ... */
+}
+
+.modal-header h3 {
+  color: black;
+  /* Явно задаем цвет для заголовка модалки */
+}
+
+.modal-footer .btn-modal {
+  color: white;
+  /* Кнопки на цветном фоне */
+  /* ... другие стили кнопок ... */
+}
+
+.btn-cancel {
+  background-color: #6c757d;
+}
+
+.btn-confirm {
+  background-color: #dc3545;
+}
+
+/* Стили для аккордеона (тело аккордеона на темном фоне) */
+.accordion .body {
+  background: #6c5ce7;
+  /* Темно-фиолетовый фон */
+  color: white;
+  /* Белый текст на фиолетовом фоне */
+  /* ... другие стили ... */
+}
+
+.time-holder {
+  font-size: 4em;
+}
+
+.button-time {
+  color: orange;
+  font-size: 20px;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.timer-container {
+  position: fixed;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+
 
 .button-group {
   display: flex;
@@ -15,46 +102,113 @@ body {
   /* или 12px, 1em - как вам удобнее */
 }
 
-.modal {
-  color: red;
-  position: fixed;
-  top: 60px;
-  width: 70%;
-  padding: 1rem;
-  background: #fff;
-  z-index: 1000;
-  left: 50%;
-  border-radius: 10px;
-  transform: translateX(-50%);
-  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.2);
-}
-
+/* Базовые стили */
 .modal-backdrop {
   position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, .65);
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  /* Затемнение фона */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 500px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.modal-header h3 {
+  margin: 0;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-footer.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  /* Отступ между кнопками */
+}
+
+.btn-modal {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: inherit;
+  font-weight: bold;
+  transition: all .2s ease-in-out;
+}
+
+.btn-cancel {
+  background-color: #6c757d;
+  /* Серый */
+  color: white;
+}
+
+.btn-confirm {
+  background-color: #dc3545;
+  /* Красный */
+  color: white;
+}
+
+.btn-modal:hover {
+  opacity: .9;
+}
+
+/* Анимации */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity .3s ease, transform .3s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
 }
 
 .removeButten {
   margin-top: 20%;
+  padding-right: 2px;
 }
 
-.session-header {}
+
 
 /* Стили для контейнера */
 .session-header {
   display: table;
-  width: 100%;
+  width: auto;
+  vertical-align: middle;
 }
 
 /* Стили для кнопки */
 .removeButten {
   /* Отображаем как ячейку таблицы */
   display: table-cell;
-  vertical-align: middle;
+  //vertical-align: middle;
   /* Выравниваем по центру по вертикали */
   padding-right: 5px;
   /* Небольшой отступ от следующего элемента */
@@ -69,9 +223,19 @@ body {
   /* Отображаем как ячейку таблицы */
   display: table-cell;
   vertical-align: middle;
+
+  box-sizing: border-box;
   /* Важно! Выравниваем по центру по вертикали */
-  width: calc(100% - 30px);
+  //width: calc(100% - 30px);
   /* Занимаем оставшееся место */
+}
+
+/* Решение проблемы с шириной <summary> */
+.first-details>summary {
+  width: 100%;
+  /* Растягиваем summary на всю ширину родителя */
+  box-sizing: border-box;
+  /* Чтобы padding и border не увеличивали общую ширину */
 }
 
 /* Убираем дефолтный маркер списка */
@@ -161,8 +325,22 @@ body {
   border-radius: 12px 12px 0 0;
 }
 
+/* 1. Фиксируем позицию блока */
 .added {
-  margin-top: 20%;
+  position: fixed;
+  /* Ключевое свойство */
+  bottom: 20px;
+  /* Отступ от нижнего края окна */
+  /*right: 20px;*/
+  /* Отступ от правого края окна */
+  z-index: 1500;
+  /* Гарантирует, что блок будет выше всех остальных элементов (кроме модальных окон) */
+}
+
+/* 2. Ограничиваем ширину, чтобы панель выглядела аккуратно */
+.added .body {
+  width: 380px;
+  /* Ширина должна соответствовать ширине других аккордеонов */
 }
 
 
@@ -260,6 +438,14 @@ details summary {
 
 @media (max-width: 520px) {
 
+  /* Решение проблемы с шириной <summary> */
+  .first-details>summary {
+    width: 100%;
+    /* Растягиваем summary на всю ширину родителя */
+    box-sizing: border-box;
+    /* Чтобы padding и border не увеличивали общую ширину */
+  }
+
   .exercise {
     width: 100;
   }
@@ -323,9 +509,9 @@ details summary {
 }
 
 .list-wrapper {
-  margin-top: 30px;
+  margin-top: 30%;
   width: 380px;
-  / как у .accordion / max-height: calc(100vh - 80px);
+  max-height: calc(100vh - 80px);
 
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -423,9 +609,9 @@ justify-content: center;
   /* Надпись на кнопке не будет переноситься на новую строку */
   flex-shrink: 1;
   /* РАЗРЕШАЕМ кнопке сжиматься, если места мало */
-  min-width: 80px;
+  min-width: 75px;
   /* Задаем минимальную ширину, чтобы кнопка не исчезла совсем */
-  max-width: 150px;
+  max-width: 140px;
   /* Задаем предел, чтобы кнопка не была слишком длинной */
   box-sizing: border-box;
   /* Чтобы padding и border входили в ширину */
@@ -452,8 +638,8 @@ justify-content: center;
   display: flex;
   //padding-top:5%;
   margin-top: 6%;
-
-  gap: 8px;
+  //margin-right:10%;
+  gap: 3px;
   justify-content: flex-end;
 
 }
@@ -597,3 +783,101 @@ button {
   display: flex;
   flex-direction: row-reverse;
 } */
+
+
+/* 1. Базовые стили для тела аккордеона */
+.accordion .body {
+  padding: 20px;
+  /* Внутренние отступы */
+  border-radius: 0 0 12px 12px;
+  /* Скругление нижних углов */
+  background-color: #6c5ce7;
+  /* Темно-фиолетовый фон, как в вашем коде */
+  color: white;
+  /* Белый текст на фиолетовом фоне */
+  transition: all 0.3s ease;
+  /* Плавные переходы для всех свойств */
+}
+
+/* 2. Стили для параграфа */
+.accordion .body p {
+  margin: 0 0 15px 0;
+  /* Убираем стандартные отступы у p, добавляем свой снизу */
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+/* 3. Стили для инпута (поля ввода) */
+.accordion .body input {
+  width: calc(100% - 40px);
+  /* Занимает всю ширину родителя за вычетом паддингов */
+  padding: 15px 20px;
+  /* Внутренние отступы для комфорта */
+  margin-bottom: 15px;
+  /* Отступ снизу от кнопки */
+
+  background-color: rgba(255, 255, 255, 0.1);
+  /* Полупрозрачный белый фон */
+  border: none;
+  /* Убираем стандартную рамку */
+  border-radius: 8px;
+  /* Скругление углов */
+  color: white;
+  /* Цвет текста внутри инпута */
+  font-size: 16px;
+
+  outline: none;
+  /* Убираем стандартное обводку при фокусе */
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  /* Плавные переходы */
+}
+
+/* Эффект при наведении курсора на инпут */
+.accordion .body input:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  /* Меняем прозрачность фона при наведении */
+}
+
+/* Эффект при фокусе на инпуте (когда пользователь кликает в него) */
+.accordion .body input:focus {
+  background-color: rgba(255, 255, 255, 0.3);
+  /* Еще более светлый фон */
+  transform: scale(1.01);
+  /* Небольшое увеличение для визуального отклика */
+}
+
+/* 4. Стили для кнопки "Добавить упражнение" */
+.accordion .body button {
+  width: calc(100% - 70px);
+  /* Занимает всю ширину родителя за вычетом паддингов */
+  padding: 15px 20px;
+
+  //background-color: #0d6efd; /* Ярко-синий цвет (цвет ссылок/ссылок) */
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+  /* Показывает, что элемент кликабелен */
+  transition: all 0.3s ease;
+  /* Плавный переход для всех свойств кнопки */
+}
+
+/* Эффект при наведении курсора на кнопку */
+.accordion .body button:hover {
+  //   background-color: #0b5ed7; /* Более темный оттенок синего при наведении */
+}
+
+/* Эффект при фокусе на кнопке (для навигации с клавиатуры) */
+.accordion .body button:focus {
+  outline: none;
+  /* Убираем стандартное обводку */
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.4);
+  /* Добавляем свечение вокруг кнопки */
+}
+
+.btn-addNew {
+  background-color: #0d6efd;
+}

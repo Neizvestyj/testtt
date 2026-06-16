@@ -5,10 +5,11 @@ const App = {
       itemToDeleteId: null,
       modal: false,
       openAccardion: false,
+      flagAccardion: false,
       openDetails: null,
       flagBtn: false,
       nameExer: "",
-      flagAccardion: false,
+      
       status: false,
       items: [
         {
@@ -57,9 +58,15 @@ const App = {
 
   },
   methods: {
-    toggleAccardion(id) {
-      this.openAccardion = this.openAccardion === id ? null : id;
-    },
+toggleAccardion(id) {
+this.openAccardion = this.openAccardion === id ? null : id;
+this.flagAccardion=false;
+
+},
+openFlagAccardion(){
+this.openAccardion=false;
+this.flagAccardion=!this.flagAccardion
+},
 
     fixLog(item, exIndex) {
       //item.logs.unshift({ weight: item.weight, reps: item.reps })
@@ -206,11 +213,10 @@ const App = {
 
 
   <div>
-  <button @click="modal=true"
-  class="btn primary"></button>
+
   
   <teleport to="body">
-  <modal @close="modal=!modal"
+  <modal @close="modal=false"
   @confirm="confirmDel"
   v-if="modal">
   </modal>
@@ -219,6 +225,8 @@ const App = {
   
   </div>
 
+   <div id="timer-root"></div>
+<app-timer />
 
 
 <span class="status" v-if="status">&#128994;
@@ -310,7 +318,7 @@ animation="150" :ghost-class="'ghost'" tag="ul" class="list">
                    </div>
 
                    <div>
-     <button @click="addExercise(item)" class="btn btnRigt" id="btnStart">{{flagBtn?"END":"NEW"}}</button>
+     <button @click="addExercise(item)" class="btn btnRigt" id="btnStart">NEW</button>
                    </div>
     </div>
          </div>
@@ -382,9 +390,10 @@ class="first-details">
 </draggable>
 </div>
 
-<div class="added" :class="['accordion', { open: flagAccardion}]">
-    <div class="head"
-@click="flagAccardion=!flagAccardion"
+<div class="added"
+ :class="['accordion', { open: flagAccardion}]">
+  <div class="head"
+@click="openFlagAccardion()"
 >
       <span>Открыть панель</span>
       <span  class="icon">+</span>
@@ -393,7 +402,9 @@ class="first-details">
     <div v-if="flagAccardion" class="body">
       <p>Введите названия упражнения</p>
 <input v-model="nameExer">
-<button @click="addNewExercise()">Добавить упражнение</button>
+<button 
+class="btn-addNew"
+@click="addNewExercise()">Добавить упражнение</button>
     </div>
   </div>
 
