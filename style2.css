@@ -886,3 +886,9 @@ button {
 .btn-addNew {
   background-color: #0d6efd;
 }
+
+.no-double-zoom {
+  touch-action: manipulation;
+  user-select: none;
+  /* Опционально: запретит выделение текста */
+}

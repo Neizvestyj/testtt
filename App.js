@@ -9,7 +9,7 @@ const App = {
       openDetails: null,
       flagBtn: false,
       nameExer: "",
-      
+
       status: false,
       items: [
         {
@@ -58,15 +58,15 @@ const App = {
 
   },
   methods: {
-toggleAccardion(id) {
-this.openAccardion = this.openAccardion === id ? null : id;
-this.flagAccardion=false;
+    toggleAccardion(id) {
+      this.openAccardion = this.openAccardion === id ? null : id;
+      this.flagAccardion = false;
 
-},
-openFlagAccardion(){
-this.openAccardion=false;
-this.flagAccardion=!this.flagAccardion
-},
+    },
+    openFlagAccardion() {
+      this.openAccardion = false;
+      this.flagAccardion = !this.flagAccardion
+    },
 
     fixLog(item, exIndex) {
       //item.logs.unshift({ weight: item.weight, reps: item.reps })
@@ -209,7 +209,7 @@ this.flagAccardion=!this.flagAccardion
     }
 
   },
-  template: `<div>
+  template: `<div class="no-double-zoom">
 
 
   <div>
