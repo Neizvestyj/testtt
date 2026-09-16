@@ -890,5 +890,8 @@ button {
 .no-double-zoom {
   touch-action: manipulation;
   user-select: none;
+  -ms-touch-action: manipulation;
+  /* Для IE11 и Edge Legacy */
   /* Опционально: запретит выделение текста */
+
 }

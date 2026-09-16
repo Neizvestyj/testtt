@@ -3,9 +3,9 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" href="style2.css">
     <title>3D Accordion</title>
@@ -20,15 +20,25 @@
 
 <body scroll="no">
 
-    <div id="app">
+    <div class="no-double-zoom" id="app">
     </div>
 
     <script src="https://unpkg.com/vue@2.7.16/dist/vue.js"></script>
 
+    <script>
+        document.addEventListener('gesturestart', function (e) {
+            e.preventDefault();
+        });
 
+        document.addEventListener('touchmove', function (e) {
+            if (Math.abs(e.scale - 1) > 0.05) {
+                e.preventDefault();
+            }
+        });
+    </script>
     <script src="App.js"></script>
     <script src="modal.js"></script>
-<script src="time.js"></script>
+    <script src="time.js"></script>
     <script>
         new Vue({
             el: "#app",
