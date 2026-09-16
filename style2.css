@@ -639,14 +639,14 @@ justify-content: center;
   //padding-top:5%;
   margin-top: 6%;
   //margin-right:10%;
-  gap: 3px;
+  /* gap: 3px;*/
   justify-content: flex-end;
 
 }
 
 .btnRigt {
   //margin-right:5px;
-  //s min-width: 60px;
+  // min-width: 60px;
   flex-shrink: 2;
 }
 
